@@ -1,9 +1,12 @@
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
-import { setIsAuthenticated } from '../context/authContext';
+import { useAuth } from '../context/authContext';
 
 export default function Signin() {
+
+  const { setIsAuthenticated } = useAuth()
+
   return (
     <View className='flex-1 items-center justify-around'>
 

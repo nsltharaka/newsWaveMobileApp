@@ -8,7 +8,7 @@ export const AuthContextProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
 
     useEffect(() => {
-        // setIsAuthenticated(false)
+        setIsAuthenticated(false)
     }, [])
 
     return (

@@ -1,11 +1,10 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
 import { Slot, useRouter, useSegments } from "expo-router";
+import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from "react";
 import { AuthContextProvider, useAuth } from "../context/authContext";
 import "../global.css";
-
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -23,7 +22,10 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
 
     const [loaded, error] = useFonts({
-        InterMedium : require('../assets/fonts/Inter-Medium.ttf'),
+        InterMedium: require('../assets/fonts/Inter-Medium.ttf'),
+        passionOneBlack: require('../assets/fonts/PassionOne-Black.ttf'),
+        passionOneBold: require('../assets/fonts/PassionOne-Bold.ttf'),
+        passionOneRegular: require('../assets/fonts/PassionOne-Regular.ttf'),
         ...FontAwesome.font,
     });
 

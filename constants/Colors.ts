@@ -16,4 +16,10 @@ export default {
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorDark,
   },
+  palette: {
+    redl1: '#ff0000',
+    redl2: '#d20000',
+    redl3: '#770000',
+    redl4: '	#3b0000',
+  },
 };
