@@ -52,25 +52,22 @@ export default function RootLayout() {
 }
 
 const MainLayout = () => {
-    const { isAuthenticated } = useAuth()
+    const { user } = useAuth()
     const segments = useSegments()
     const router = useRouter()
 
     useEffect(() => {
 
-        if (typeof isAuthenticated == 'undefined') return
-
         const inApp = segments[0] === '(app)'
 
-        if (isAuthenticated && !inApp) {
+        if (user && !inApp) {
             router.replace('(app)')
 
-        } else if (!isAuthenticated) {
+        } else if (!user) {
             router.replace('signin')
-
         }
 
-    }, [isAuthenticated])
+    }, [user])
 
     return <Slot />
 }
