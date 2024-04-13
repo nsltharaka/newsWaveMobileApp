@@ -45,10 +45,13 @@ export default function TabLayout() {
       }} />
 
       <Tabs.Screen name='topics' options={{
-        // headerTitle: "My TOPICS",
-        // tabBarLabel: 'My Topics',
         title: "My Topics",
-        tabBarIcon: ({ color }) => <AntDesign name="appstore1" size={28} color={color} />
+        tabBarIcon: ({ color }) => <AntDesign name="appstore1" size={28} color={color} />,
+        headerRight: () => (
+          <View className='mr-8'>
+            <Ionicons name="search" size={28} color="white" />
+          </View>
+        )
       }} />
 
       <Tabs.Screen name='explore' options={{

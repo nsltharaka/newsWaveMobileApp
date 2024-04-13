@@ -22,22 +22,22 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
 
     const [loaded, error] = useFonts({
+        'TiemposHeadlineBlack': require("../assets/fonts/TiemposHeadline-Black.otf"),
+        'TiemposHeadlineBlackItalic': require("../assets/fonts/TiemposHeadline-BlackItalic.otf"),
+        'TiemposHeadlineBold': require("../assets/fonts/TiemposHeadline-Bold.otf"),
+        'TiemposHeadlineBoldItalic': require("../assets/fonts/TiemposHeadline-BoldItalic.otf"),
+        'TiemposHeadlineLight': require("../assets/fonts/TiemposHeadline-Light.otf"),
+        'TiemposHeadlineLightItalic': require("../assets/fonts/TiemposHeadline-LightItalic.otf"),
+        'TiemposHeadlineMedium': require("../assets/fonts/TiemposHeadline-Medium.otf"),
+        'TiemposHeadlineMediumItalic': require("../assets/fonts/TiemposHeadline-MediumItalic.otf"),
+        'TiemposHeadlineRegular': require("../assets/fonts/TiemposHeadline-Regular.otf"),
+        'TiemposHeadlineRegularItalic': require("../assets/fonts/TiemposHeadline-RegularItalic.otf"),
+        'TiemposHeadlineSemibold': require("../assets/fonts/TiemposHeadline-Semibold.otf"),
+        'TiemposHeadlineSemiboldItalic': require("../assets/fonts/TiemposHeadline-SemiboldItalic.otf"),
+        'passionOneBlack': require("../assets/fonts/PassionOne-Black.ttf"),
+        'passionOneBold': require("../assets/fonts/PassionOne-Bold.ttf"),
+        'passionOneRegular': require("../assets/fonts/PassionOne-Regular.ttf"),
         ...FontAwesome.font,
-        TiemposHeadlineBlack: "./assets/fonts/TiemposHeadline-Black.otf",
-        TiemposHeadlineBlackItalic: "./assets/fonts/TiemposHeadline-BlackItalic.otf",
-        TiemposHeadlineBold: "./assets/fonts/TiemposHeadline-Bold.otf",
-        TiemposHeadlineBoldItalic: "./assets/fonts/TiemposHeadline-BoldItalic.otf",
-        TiemposHeadlinelight: "./assets/fonts/TiemposHeadline-Light.otf",
-        TiemposHeadlinelightItalic: "./assets/fonts/TiemposHeadline-LightItalic.otf",
-        TiemposHeadlineMedium: "./assets/fonts/TiemposHeadline-Medium.otf",
-        TiemposHeadlineMediumItalic: "./assets/fonts/TiemposHeadline-MediumItalic.otf",
-        TiemposHeadlineRegular: "./assets/fonts/TiemposHeadline-Regular.otf",
-        TiemposHeadlineRegularItalic: "./assets/fonts/TiemposHeadline-RegularItalic.otf",
-        TiemposHeadlineSemibold: "./assets/fonts/TiemposHeadline-Semibold.otf",
-        TiemposHeadlineSemiboldItalic: "./assets/fonts/TiemposHeadline-SemiboldItalic.otf",
-        PassionOneBlack: "./assets/fonts/PassionOne-Black.ttf",
-        PassionOneBold: "./assets/fonts/PassionOne-Bold.ttf",
-        PassionOneRegular: "./assets/fonts/PassionOne-Regular.ttf"
     });
 
     // Expo Router uses Error Boundaries to catch errors in the navigation tree.
