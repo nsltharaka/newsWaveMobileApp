@@ -1,8 +1,7 @@
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import React from 'react';
-import colors from '../../../constants/Colors';
-import { Text } from 'react-native';
+import colors from '../../constants/Colors';
 
 export default function TabLayout() {
   return (

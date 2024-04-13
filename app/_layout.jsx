@@ -1,6 +1,6 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useFonts } from 'expo-font';
-import { Slot, useRouter, useSegments } from "expo-router";
+import { Slot, useRouter, useSegments, Stack } from "expo-router";
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from "react";
 import { AuthContextProvider, useAuth } from "../context/authContext";
@@ -61,7 +61,7 @@ const MainLayout = () => {
         const inApp = segments[0] === '(app)'
 
         if (user && !inApp) {
-            router.replace('(app)')
+            router.replace('(tab)')
 
         } else if (!user) {
             router.replace('signin')
@@ -69,5 +69,27 @@ const MainLayout = () => {
 
     }, [user])
 
-    return <Slot />
+    return (
+        <Stack screenOptions={{
+            headerShown: false,
+            animation: 'slide_from_right',
+        }}>
+            <Stack.Screen name='(tab)' />
+            <Stack.Screen name='index' />
+            <Stack.Screen name='forgotPassword' />
+
+            <Stack.Screen
+                name='signin'
+                options={{
+                    animation: 'fade'
+                }}
+            />
+            <Stack.Screen
+                name='signUp'
+                options={{
+                    animation: 'fade'
+                }}
+            />
+        </Stack>
+    )
 }

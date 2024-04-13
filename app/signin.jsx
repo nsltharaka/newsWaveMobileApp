@@ -16,7 +16,7 @@ export default function Signin() {
       <StatusBar style='dark' />
       <View style={{ marginTop: 30 }} className='flex-1 px-6 gap-12'>
 
-        <View style={{ height: 200, marginTop: 70 }} className='items-center justify-center'>
+        <View style={{ height: 200, marginTop: 30 }} className='items-center justify-end'>
           <View className='flex-row gap-0 w-96 justify-center'>
             <Text style={{ fontFamily: 'passionOneRegular' }} className='text-8xl text-redl2'>News</Text>
             <Text style={{ fontFamily: 'passionOneRegular' }} className='text-8xl'>Wave</Text>
@@ -50,7 +50,7 @@ export default function Signin() {
             <Text className='text-center text-2xl text-white font-extrabold'>Sign In</Text>
           </TouchableOpacity>
 
-          <View className='flex-row gap-2 justify-center pr-6'>
+          <View className='gap-2 justify-center items-center mt-12 pr-6'>
             <Text className='text-neutral-500 font-semibold'>Don't have an account?</Text>
             <Pressable onPress={() => router.push('signUp')}>
               <Text className='text-redl2 font-bold'>Sign Up</Text>
