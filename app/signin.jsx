@@ -1,39 +1,66 @@
-import { FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
-import { useAuth } from '../context/authContext';
+import { Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import Colors from '../constants/Colors';
 
 export default function Signin() {
 
-  const { promptAsync } = useAuth()
+  const router = useRouter()
+
+  const handleChange = () => {
+  }
 
   return (
-    <View className='flex-1 items-center justify-around'>
+    <View className='flex-1'>
+      <StatusBar style='dark' />
+      <View style={{ marginTop: 30 }} className='flex-1 px-6 gap-12'>
 
-      <View style={{ width: 350, aspectRatio: 1 }}>
-        <Image
-          className='flex-1 w-full'
-          source={require('../assets/images/login.png')}
-        />
+        <View style={{ height: 200, marginTop: 70 }} className='items-center justify-center'>
+          <View className='flex-row gap-0 w-96 justify-center'>
+            <Text style={{ fontFamily: 'passionOneRegular' }} className='text-8xl text-redl2'>News</Text>
+            <Text style={{ fontFamily: 'passionOneRegular' }} className='text-8xl'>Wave</Text>
+          </View>
+        </View>
+
+        {/* <View className='items-center'>
+          <Image style={{ height: 280, aspectRatio: 1 }} resizeMode='contain' source={require('../assets/images/login2.png')} />
+        </View> */}
+
+        <Text style={{ fontFamily: 'passionOneRegular' }} className='text-5xl tracking-wider text-center text-neutral-600'>Sign In</Text>
+        <View className='gap-4'>
+          {/* text inputs */}
+          <View className='flex-row gap-6 h-20 px-8  bg-neutral-200 items-center'>
+            <Ionicons name="mail-outline" size={28} color="black" />
+            <TextInput cursorColor={Colors.palette.redl2} onChange={() => handleChange()} placeholder='Email Address' placeholderTextColor={'gray'} className='flex-1 font-semibold text-neutral-700 text-xl' />
+          </View>
+
+          <View className='gap-3'>
+            <View className='flex-row gap-6 h-20 px-8  bg-neutral-200 items-center'>
+              <Ionicons name="lock-closed-outline" size={28} color="black" />
+              <TextInput cursorColor={Colors.palette.redl2} onChange={() => handleChange()} placeholder='Password' placeholderTextColor={'gray'} secureTextEntry className='flex-1 font-semibold text-neutral-700 text-xl' />
+            </View>
+
+            <Pressable onPress={() => router.push('forgotPassword')}>
+              <Text className='text-right pr-6 text-neutral-500 font-semibold'>forgot password?</Text>
+            </Pressable>
+          </View>
+
+          <TouchableOpacity className='bg-redl2 h-20 justify-center mt-2'>
+            <Text className='text-center text-2xl text-white font-extrabold'>Sign In</Text>
+          </TouchableOpacity>
+
+          <View className='flex-row gap-2 justify-center pr-6'>
+            <Text className='text-neutral-500 font-semibold'>Don't have an account?</Text>
+            <Pressable onPress={() => router.push('signUp')}>
+              <Text className='text-redl2 font-bold'>Sign Up</Text>
+            </Pressable>
+          </View>
+
+        </View>
+
       </View>
-
-      <View className='w-full p-8 gap-8 bg-orange'>
-        <TouchableOpacity className='w-full h-16 rounded-full flex-row justify-center items-center relative bg-black' onPress={() => promptAsync()}>
-          <Ionicons name="logo-google" size={24} color="white" className='absolute left-8' />
-          <Text className='text-center font-medium text-xl text-white'>Continue with Google</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity className='w-full h-16 rounded-full flex-row justify-center items-center relative bg-fb-blue'>
-          <FontAwesome5 name="facebook-f" size={24} color="white" className='absolute left-9' />
-          <Text className='text-white text-center font-medium text-xl font'>Continue with facebook</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity className='w-full h-16 rounded-full flex-row justify-center items-center relative bg-apple-gray'>
-          <Ionicons name="logo-apple" size={28} color="black" className='absolute left-8' />
-          <Text className='text-black text-center font-medium text-xl'>Continue with apple</Text>
-        </TouchableOpacity>
-      </View>
-
     </View>
   )
 }

@@ -5,9 +5,13 @@ module.exports = {
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
-      colors : {
-        'fb-blue' : '#2D68C4',
-        'apple-gray' : '#A2AAAD',
+      colors: {
+        'fb-blue': '#2D68C4',
+        'apple-gray': '#A2AAAD',
+        'redl1': '#ff0000',
+        'redl2': '#d20000',
+        'redl3': '#770000',
+        'redl4': '#3b0000',
       }
     },
   },
