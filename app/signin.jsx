@@ -16,18 +16,14 @@ export default function Signin() {
       <StatusBar style='dark' />
       <View style={{ marginTop: 30 }} className='flex-1 px-6 gap-12'>
 
-        <View style={{ height: 200, marginTop: 30 }} className='items-center justify-end'>
+        <View style={{ height: 175 }} className='items-center justify-end'>
           <View className='flex-row gap-0 w-96 justify-center'>
             <Text style={{ fontFamily: 'passionOneRegular' }} className='text-8xl text-redl2'>News</Text>
             <Text style={{ fontFamily: 'passionOneRegular' }} className='text-8xl'>Wave</Text>
           </View>
         </View>
 
-        {/* <View className='items-center'>
-          <Image style={{ height: 280, aspectRatio: 1 }} resizeMode='contain' source={require('../assets/images/login2.png')} />
-        </View> */}
-
-        <Text style={{ fontFamily: 'passionOneRegular' }} className='text-5xl tracking-wider text-center text-neutral-600'>Sign In</Text>
+        <Text style={{ fontFamily: 'passionOneRegular' }} className='text-5xl tracking-wider text-center text-neutral-600 mt-8'>Sign In</Text>
         <View className='gap-4'>
           {/* text inputs */}
           <View className='flex-row gap-6 h-20 px-8  bg-neutral-200 items-center'>
@@ -50,12 +46,12 @@ export default function Signin() {
             <Text className='text-center text-2xl text-white font-extrabold'>Sign In</Text>
           </TouchableOpacity>
 
-          <View className='gap-2 justify-center items-center mt-12 pr-6'>
-            <Text className='text-neutral-500 font-semibold'>Don't have an account?</Text>
-            <Pressable onPress={() => router.push('signUp')}>
+          <Pressable onPress={() => router.push('signUp')}>
+            <View className='gap-2 justify-center items-center mt-12 pr-6'>
+              <Text className='text-neutral-500 font-semibold'>Don't have an account?</Text>
               <Text className='text-redl2 font-bold'>Sign Up</Text>
-            </Pressable>
-          </View>
+            </View>
+          </Pressable>
 
         </View>
 

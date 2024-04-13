@@ -52,12 +52,12 @@ export default function Signin() {
                         <Text className='text-center text-2xl text-white font-extrabold'>Sign Up</Text>
                     </TouchableOpacity>
 
-                    <View className='gap-2 justify-center items-center mt-6 pr-6'>
-                        <Text className='text-neutral-500 font-semibold'>already have an account?</Text>
-                        <Pressable onPress={() => router.replace('signin')}>
+                    <Pressable onPress={() => router.replace('signin')}>
+                        <View className='gap-2 justify-center items-center mt-6 pr-6'>
+                            <Text className='text-neutral-500 font-semibold'>already have an account?</Text>
                             <Text className='text-redl2 font-bold'>Sign In</Text>
-                        </Pressable>
-                    </View>
+                        </View>
+                    </Pressable>
 
                 </View>
 
