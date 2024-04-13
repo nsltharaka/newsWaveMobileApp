@@ -17,7 +17,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier" : "com.nslth.newsWave"
+      "bundleIdentifier": "com.nslth.newsWave"
     },
     "android": {
       "adaptiveIcon": {
@@ -32,7 +32,29 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/TiemposHeadline-Black.otf",
+            "./assets/fonts/TiemposHeadline-BlackItalic.otf",
+            "./assets/fonts/TiemposHeadline-Bold.otf",
+            "./assets/fonts/TiemposHeadline-BoldItalic.otf",
+            "./assets/fonts/TiemposHeadline-Light.otf",
+            "./assets/fonts/TiemposHeadline-LightItalic.otf",
+            "./assets/fonts/TiemposHeadline-Medium.otf",
+            "./assets/fonts/TiemposHeadline-MediumItalic.otf",
+            "./assets/fonts/TiemposHeadline-Regular.otf",
+            "./assets/fonts/TiemposHeadline-RegularItalic.otf",
+            "./assets/fonts/TiemposHeadline-Semibold.otf",
+            "./assets/fonts/TiemposHeadline-SemiboldItalic.otf",
+            "./assets/fonts/PassionOne-Black.ttf",
+            "./assets/fonts/PassionOne-Bold.ttf",
+            "./assets/fonts/PassionOne-Regular.ttf"
+          ]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

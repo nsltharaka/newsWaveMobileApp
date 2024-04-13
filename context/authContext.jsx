@@ -5,6 +5,12 @@ export const AuthContextProvider = ({ children }) => {
 
     const [user, setUser] = useState(null)
 
+    useEffect(() => { 
+        setUser({
+            username : "nisal",
+        })
+    }, [])
+
     return (
         <AuthContext.Provider
             value={{

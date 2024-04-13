@@ -22,11 +22,22 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
 
     const [loaded, error] = useFonts({
-        InterMedium: require('../assets/fonts/Inter-Medium.ttf'),
-        passionOneBlack: require('../assets/fonts/PassionOne-Black.ttf'),
-        passionOneBold: require('../assets/fonts/PassionOne-Bold.ttf'),
-        passionOneRegular: require('../assets/fonts/PassionOne-Regular.ttf'),
         ...FontAwesome.font,
+        TiemposHeadlineBlack: "./assets/fonts/TiemposHeadline-Black.otf",
+        TiemposHeadlineBlackItalic: "./assets/fonts/TiemposHeadline-BlackItalic.otf",
+        TiemposHeadlineBold: "./assets/fonts/TiemposHeadline-Bold.otf",
+        TiemposHeadlineBoldItalic: "./assets/fonts/TiemposHeadline-BoldItalic.otf",
+        TiemposHeadlinelight: "./assets/fonts/TiemposHeadline-Light.otf",
+        TiemposHeadlinelightItalic: "./assets/fonts/TiemposHeadline-LightItalic.otf",
+        TiemposHeadlineMedium: "./assets/fonts/TiemposHeadline-Medium.otf",
+        TiemposHeadlineMediumItalic: "./assets/fonts/TiemposHeadline-MediumItalic.otf",
+        TiemposHeadlineRegular: "./assets/fonts/TiemposHeadline-Regular.otf",
+        TiemposHeadlineRegularItalic: "./assets/fonts/TiemposHeadline-RegularItalic.otf",
+        TiemposHeadlineSemibold: "./assets/fonts/TiemposHeadline-Semibold.otf",
+        TiemposHeadlineSemiboldItalic: "./assets/fonts/TiemposHeadline-SemiboldItalic.otf",
+        PassionOneBlack: "./assets/fonts/PassionOne-Black.ttf",
+        PassionOneBold: "./assets/fonts/PassionOne-Bold.ttf",
+        PassionOneRegular: "./assets/fonts/PassionOne-Regular.ttf"
     });
 
     // Expo Router uses Error Boundaries to catch errors in the navigation tree.
@@ -61,7 +72,7 @@ const MainLayout = () => {
         const inApp = segments[0] === '(app)'
 
         if (user && !inApp) {
-            router.replace('(tab)')
+            router.replace('(tab)/topics')
 
         } else if (!user) {
             router.replace('signin')
