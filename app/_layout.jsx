@@ -72,7 +72,7 @@ const MainLayout = () => {
         const inApp = segments[0] === '(app)'
 
         if (user && !inApp) {
-            router.replace('(tab)/topics')
+            router.replace('screens/addTopic')
 
         } else if (!user) {
             router.replace('signin')
@@ -88,6 +88,10 @@ const MainLayout = () => {
             <Stack.Screen name='(tab)' />
             <Stack.Screen name='index' />
             <Stack.Screen name='forgotPassword' />
+
+            <Stack.Screen name='screens' options={{
+                animation: 'fade_from_bottom',
+            }} />
 
             <Stack.Screen
                 name='signin'

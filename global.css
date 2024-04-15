@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-.debug {
-    background-color: lightgreen;
-    border: 1px solid darkgreen;
-}
+@layer utilities {
+    .debug {
+      @apply border-green-500 border bg-green-100
+    }
+  }

@@ -1,8 +1,8 @@
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import React from 'react';
+import { Text, View } from 'react-native';
 import colors from '../../constants/Colors';
-import { View, Text } from 'react-native';
 
 export default function TabLayout() {
   return (
@@ -56,7 +56,7 @@ export default function TabLayout() {
 
       <Tabs.Screen name='explore' options={{
         title: "Explore",
-        tabBarIcon: ({ color }) => <Ionicons name="search" size={28} color={color} />
+        tabBarIcon: ({ color }) => <Ionicons name="earth" size={28} color={color} />
       }} />
 
       <Tabs.Screen name='profile' options={{
