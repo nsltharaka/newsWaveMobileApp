@@ -1,24 +1,36 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Colors from '../../constants/Colors';
+import validateURL from '../../lib/urlValidator'
 
 export default function Page() {
 
+  const [validationProcessing, setValidationProcessing] = useState(false)
   const [sourceText, setSourceText] = useState('')
   const [formData, setFormData] = useState({
     title: "",
     sources: [],
   })
 
-  const handleAdd = () => {
-    if (sourceText === "") return
+  const handleAdd = async () => {
 
-    if (!formData.sources.includes(sourceText)) {
-      setFormData({ ...formData, sources: [...formData.sources, sourceText] })
+    if (formData.sources.includes(sourceText) || sourceText === "") {
+      setSourceText('')
+      return
     }
 
-    setSourceText('')
+    setValidationProcessing(true)
+    const [isValid, errorMsg] = await validateURL(sourceText)
+    setValidationProcessing(false)
+
+    if (isValid) {
+      setFormData({ ...formData, sources: [...formData.sources, sourceText] })
+      setSourceText('')
+    } else {
+      Alert.alert('Validation Failed', errorMsg)
+    }
+
   }
 
   const handleDelete = (item) => {
@@ -71,9 +83,17 @@ export default function Page() {
             placeholder='https://'
             onChangeText={(txt) => setSourceText(txt)}
           />
-          <TouchableOpacity onPress={handleAdd}>
-            <Ionicons name="add-circle-sharp" size={34} color={Colors.palette.redl2} />
-          </TouchableOpacity>
+
+          {validationProcessing ?
+            <ActivityIndicator color={"red"} size={'small'} />
+            :
+            <TouchableOpacity onPress={handleAdd}>
+              <Ionicons name="add-circle-sharp" size={34} color={Colors.palette.redl2} />
+            </TouchableOpacity>
+          }
+
+
+
         </View>
       </View>
       <TouchableOpacity className='bg-redl2 h-16 justify-center mt-2'>
