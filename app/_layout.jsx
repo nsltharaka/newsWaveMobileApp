@@ -1,10 +1,11 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import { Stack, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from "react";
 import { AuthContextProvider, useAuth } from "../context/authContext";
 import "../global.css";
+import Colors from '../constants/Colors';
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -72,7 +73,7 @@ const MainLayout = () => {
         const inApp = segments[0] === '(app)'
 
         if (user && !inApp) {
-            router.replace('screens/addTopic')
+            router.replace('signin')
 
         } else if (!user) {
             router.replace('signin')
@@ -83,28 +84,20 @@ const MainLayout = () => {
     return (
         <Stack screenOptions={{
             headerShown: false,
-            animation: 'slide_from_right',
+            animation: 'fade_from_bottom',
         }}>
-            <Stack.Screen name='(tab)' />
             <Stack.Screen name='index' />
-            <Stack.Screen name='forgotPassword' />
-
-            <Stack.Screen name='screens' options={{
-                animation: 'fade_from_bottom',
+            <Stack.Screen name='signin' options={{}} />
+            <Stack.Screen name='signUp' options={{}} />
+            <Stack.Screen name='forgotPassword' options={{
+                headerShown: true,
+                headerTitle: "",
+                animation : "slide_from_right"
             }} />
 
-            <Stack.Screen
-                name='signin'
-                options={{
-                    animation: 'fade'
-                }}
-            />
-            <Stack.Screen
-                name='signUp'
-                options={{
-                    animation: 'fade'
-                }}
-            />
+            <Stack.Screen name='(tab)' />
+            <Stack.Screen name='screens' options={{}} />
+
         </Stack>
     )
 }

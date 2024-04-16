@@ -5,9 +5,9 @@ export const AuthContextProvider = ({ children }) => {
 
     const [user, setUser] = useState(null)
 
-    useEffect(() => { 
+    useEffect(() => {
         setUser({
-            username : "nisal",
+            name : "nisal"
         })
     }, [])
 
