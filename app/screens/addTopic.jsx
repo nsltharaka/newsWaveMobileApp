@@ -21,14 +21,18 @@ export default function Page() {
     }
 
     setValidationProcessing(true)
-    const [isValid, errorMsg] = await validateURL(sourceText)
-    setValidationProcessing(false)
+    try {
+      const [isValid, errorMsg] = await validateURL(sourceText)
 
-    if (isValid) {
-      setFormData({ ...formData, sources: [...formData.sources, sourceText] })
-      setSourceText('')
-    } else {
-      Alert.alert('Validation Failed', errorMsg)
+      if (isValid) {
+        setFormData({ ...formData, sources: [...formData.sources, sourceText] })
+        setSourceText('')
+      } else {
+        Alert.alert('Validation Failed', errorMsg)
+      }
+
+    } finally {
+      setValidationProcessing(false)
     }
 
   }
