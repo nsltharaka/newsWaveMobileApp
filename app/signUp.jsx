@@ -1,15 +1,30 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import { Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Colors from '../constants/Colors';
+import { useAuth } from '../context/authContext';
 
 export default function Signin() {
 
     const router = useRouter()
+    const { handleRegister } = useAuth()
 
-    const handleChange = () => {
+    const [formData, setFormData] = useState({
+        username: "",
+        email: "",
+        password: "",
+    })
+
+    const btnSignUpClicked = () => {
+
+        handleRegister(
+            formData.username,
+            formData.email,
+            formData.password
+        )
+
     }
 
     return (
@@ -30,25 +45,27 @@ export default function Signin() {
                     {/* text inputs */}
                     <View className='flex-row gap-6 h-20 px-8  bg-neutral-200 items-center'>
                         <Ionicons name="person-outline" size={28} color="black" />
-                        <TextInput cursorColor={Colors.palette.redl2} onChange={() => handleChange()} placeholder='Username' placeholderTextColor={'gray'} className='flex-1 font-semibold text-neutral-700 text-xl' />
+                        <TextInput cursorColor={Colors.palette.redl2} onChangeText={(txt) => setFormData({ ...formData, username: txt })} placeholder='Username' placeholderTextColor={'gray'} className='flex-1 font-semibold text-neutral-700 text-xl' />
                     </View>
 
                     <View className='flex-row gap-6 h-20 px-8  bg-neutral-200 items-center'>
                         <Ionicons name="mail-outline" size={28} color="black" />
-                        <TextInput cursorColor={Colors.palette.redl2} onChange={() => handleChange()} placeholder='Email Address' placeholderTextColor={'gray'} className='flex-1 font-semibold text-neutral-700 text-xl' />
+                        <TextInput cursorColor={Colors.palette.redl2} onChangeText={(txt) => setFormData({ ...formData, email: txt })} placeholder='Email Address' placeholderTextColor={'gray'} className='flex-1 font-semibold text-neutral-700 text-xl' />
                     </View>
 
                     <View className='flex-row gap-6 h-20 px-8  bg-neutral-200 items-center'>
                         <Ionicons name="key-outline" size={28} color="black" />
-                        <TextInput cursorColor={Colors.palette.redl2} onChange={() => handleChange()} placeholder='Password' placeholderTextColor={'gray'} secureTextEntry className='flex-1 font-semibold text-neutral-700 text-xl' />
+                        <TextInput cursorColor={Colors.palette.redl2} onChangeText={(txt) => setFormData({ ...formData, password: txt })} placeholder='Password' placeholderTextColor={'gray'} secureTextEntry className='flex-1 font-semibold text-neutral-700 text-xl' />
                     </View>
 
                     <View className='flex-row gap-6 h-20 px-8  bg-neutral-200 items-center'>
                         <Ionicons name="key-outline" size={28} color="black" />
-                        <TextInput cursorColor={Colors.palette.redl2} onChange={() => handleChange()} placeholder='Confirm Password' placeholderTextColor={'gray'} secureTextEntry className='flex-1 font-semibold text-neutral-700 text-xl' />
+                        <TextInput cursorColor={Colors.palette.redl2} onChangeText={(txt) => setFormData({ ...formData, password: txt })} placeholder='Confirm Password' placeholderTextColor={'gray'} secureTextEntry className='flex-1 font-semibold text-neutral-700 text-xl' />
                     </View>
 
-                    <TouchableOpacity className='bg-redl2 h-20 justify-center mt-2'>
+                    <TouchableOpacity className='bg-redl2 h-20 justify-center mt-2'
+                        onPress={btnSignUpClicked}
+                    >
                         <Text className='text-center text-2xl text-white font-extrabold'>Sign Up</Text>
                     </TouchableOpacity>
 

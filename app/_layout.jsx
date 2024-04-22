@@ -73,7 +73,7 @@ const MainLayout = () => {
         const inApp = segments[0] === '(app)'
 
         if (user && !inApp) {
-            router.replace('signin')
+            router.replace('(tab)') 
 
         } else if (!user) {
             router.replace('signin')
