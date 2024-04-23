@@ -3,15 +3,36 @@ import React, { useState } from 'react';
 import { ActivityIndicator, Alert, FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Colors from '../../constants/Colors';
 import validateURL from '../../lib/urlValidator'
+import { addFollowTopicFeed } from '../../lib/api';
+import { useRouter } from 'expo-router';
 
 export default function Page() {
 
+  const router = useRouter()
+
+  const [submissionProcessing, setSubmissionProcessing] = useState(false)
   const [validationProcessing, setValidationProcessing] = useState(false)
   const [sourceText, setSourceText] = useState('')
   const [formData, setFormData] = useState({
     title: "",
     sources: [],
   })
+
+  const btnSubmitClicked = async () => {
+
+    setSubmissionProcessing(true)
+    try {
+      await addFollowTopicFeed(formData)
+
+    } catch (error) {
+      console.log(error);
+
+    } finally {
+      setSubmissionProcessing(false)
+      router.back()
+    }
+
+  }
 
   const handleAdd = async () => {
 
@@ -96,13 +117,21 @@ export default function Page() {
             </TouchableOpacity>
           }
 
-
-
         </View>
       </View>
-      <TouchableOpacity className='bg-redl2 h-16 justify-center mt-2'>
-        <Text className='text-center text-2xl text-white font-extrabold'>Submit</Text>
-      </TouchableOpacity>
+
+      <View className='h-16 justify-center'>
+        {submissionProcessing ?
+          <ActivityIndicator color={"red"} size={'large'} />
+          :
+          <TouchableOpacity className='bg-redl2 h-16 justify-center mt-2'
+            onPress={btnSubmitClicked}
+          >
+            <Text className='text-center text-2xl text-white font-extrabold'>Submit</Text>
+          </TouchableOpacity>
+        }
+      </View>
+
     </View>
   )
 }

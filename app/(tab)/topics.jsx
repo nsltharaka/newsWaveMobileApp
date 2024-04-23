@@ -1,12 +1,16 @@
 import { Ionicons } from '@expo/vector-icons'
+import { useFocusEffect, useRouter } from 'expo-router'
 import React from 'react'
 import { ScrollView, TouchableOpacity, View } from 'react-native'
 import Topic from '../../components/Topic'
-import { useRouter } from 'expo-router'
 
 export default function Topics() {
 
   const router = useRouter()
+  
+  useFocusEffect(() => {
+    console.log("re-rendered topics page");
+  })
 
   return (
     <View className='flex-1 relative'>

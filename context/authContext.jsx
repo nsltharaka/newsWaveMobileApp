@@ -1,7 +1,6 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { API_URL } from "../lib/api";
 import axios from "axios";
-import * as SecureStore from 'expo-secure-store'
+import * as SecureStore from 'expo-secure-store';
+import { createContext, useContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext()
 export const AuthContextProvider = ({ children }) => {
@@ -12,7 +11,7 @@ export const AuthContextProvider = ({ children }) => {
 
         try {
             const response = await axios.post(
-                `${API_URL}/users/register`,
+                '/users/register',
                 {
                     username,
                     email,
@@ -38,7 +37,7 @@ export const AuthContextProvider = ({ children }) => {
     const handleLogin = async (email, password) => {
         try {
             const response = await axios.post(
-                `${API_URL}/users/login`,
+                '/users/login',
                 {
                     email,
                     password,
@@ -70,6 +69,7 @@ export const AuthContextProvider = ({ children }) => {
             try {
                 const existingUser = await SecureStore.getItemAsync("currentUser")
                 if (existingUser) {
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${existingUser.api_key}`
                     setUser(JSON.parse(existingUser))
                 }
 
