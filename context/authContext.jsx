@@ -22,7 +22,9 @@ export const AuthContextProvider = ({ children }) => {
             const user = response.data
 
             const userString = JSON.stringify(user)
-            await SecureStore.setItemAsync("currentUser", userString)
+            SecureStore.setItem("currentUser", userString)
+            axios.defaults.headers.common['Authorization'] = `Bearer ${user.api_key}`
+
 
             setUser(user)
 
@@ -46,37 +48,35 @@ export const AuthContextProvider = ({ children }) => {
 
             const user = response.data
             const userString = JSON.stringify(user)
-            await SecureStore.setItemAsync("currentUser", userString)
+            SecureStore.setItem("currentUser", userString)
+            axios.defaults.headers.common['Authorization'] = `Bearer ${user.api_key}`
 
             setUser(user)
 
         } catch (error) {
-            console.log(error.response.data);
+            console.log(JSON.stringify(error.response.data, null, 2));
         }
     }
 
-    const handleLogout = async () => {
-        try {
-            await SecureStore.deleteItemAsync("currentUser")
-            setUser(null)
-        } catch (error) {
-            return
-        }
+    const handleLogout = () => {
+        SecureStore.deleteItemAsync("currentUser")
+        setUser(null)
     }
 
     useEffect(() => {
-        (async () => {
-            try {
-                const existingUser = await SecureStore.getItemAsync("currentUser")
-                if (existingUser) {
-                    axios.defaults.headers.common['Authorization'] = `Bearer ${existingUser.api_key}`
-                    setUser(JSON.parse(existingUser))
-                }
+        console.log("running useeffect on authContext...");
 
-            } catch (error) {
-                return
-            }
-        })()
+        const existingUserString = SecureStore.getItem("currentUser")
+        if (existingUserString) {
+            existingUser = JSON.parse(existingUserString)
+            console.log("user exists: ", existingUser);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${existingUser.api_key}`
+            setUser(existingUser)
+            return
+        }
+
+        console.log("no persisted user");
+
     }, [])
 
     return (

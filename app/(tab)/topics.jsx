@@ -1,16 +1,29 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useFocusEffect, useRouter } from 'expo-router'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import { ScrollView, TouchableOpacity, View } from 'react-native'
 import Topic from '../../components/Topic'
+import { getAllTopicsForUser } from '../../lib/api'
 
 export default function Topics() {
 
   const router = useRouter()
-  
-  useFocusEffect(() => {
-    console.log("re-rendered topics page");
-  })
+
+  const [topics, setTopics] = useState([])
+
+  useFocusEffect(
+    useCallback(() => {
+      console.log("fetching data on topics page...");
+
+      const fetchData = async () => {
+        const data = await getAllTopicsForUser()
+        setTopics(data)
+      }
+
+      fetchData()
+
+    }, [])
+  )
 
   return (
     <View className='flex-1 relative'>
@@ -23,24 +36,20 @@ export default function Topics() {
 
 
       <ScrollView overScrollMode='never' showsVerticalScrollIndicator={false} >
-        <Topic
-          imageSrc={"https://swarajya.gumlet.io/swarajya/2022-10/64332d71-ebaa-4cac-9109-8135e08ac4bf/Russia_Image.png?w=640&q=75&auto=format,compress&format=webp"}
-          topic="Russian-Ukraine War"
-          lastUpdated="2 Hours ago"
-          sourceCount={10}
-        />
-        <Topic
-          imageSrc={"https://cdn.create.vista.com/api/media/small/78007746/stock-photo-passenger-train-in-sri-lanka"}
-          topic="Train Updates"
-          lastUpdated="20 Minutes ago"
-          sourceCount={10}
-        />
-        <Topic
-          imageSrc={"https://www.freecodecamp.org/news/content/images/size/w2000/2021/10/golang.png"}
-          topic="GO Programming"
-          lastUpdated="10 Weeks ago"
-          sourceCount={7}
-        />
+
+        {
+          topics.map(t => (
+            <TouchableOpacity key={t.id} activeOpacity={0.6}>
+              <Topic
+                imageSrc={t.img_url}
+                lastUpdated={t.updated_at}
+                sourceCount={t.source_count}
+                topic={t.name}
+              />
+            </TouchableOpacity>
+          ))
+        }
+
       </ScrollView>
     </View>
   )
