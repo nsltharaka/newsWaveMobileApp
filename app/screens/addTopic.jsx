@@ -20,6 +20,16 @@ export default function Page() {
 
   const btnSubmitClicked = async () => {
 
+    if (!formData.title) {
+      Alert.alert('Validation', 'title cannot be empty')
+      return
+    }
+
+    if (formData.sources.length === 0) {
+      Alert.alert('validation', 'at least one source is required in order to add a topic.')
+      return
+    }
+
     setSubmissionProcessing(true)
     try {
       await addFollowTopicFeed(formData)

@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Colors from '../constants/Colors';
 import { useAuth } from '../context/authContext';
 
@@ -13,14 +13,20 @@ export default function Signin() {
     email: "",
     password: "",
   })
+  const [loading, setLoading] = useState(false)
 
   const { handleLogin } = useAuth()
 
-  const btnLoginClicked = () => {
-    handleLogin(
-      formData.email,
-      formData.password,
-    )
+  const btnLoginClicked = async () => {
+
+    if (!formData.email || !formData.password) {
+      return
+    }
+
+    setLoading(true)
+    await handleLogin(formData.email, formData.password,)
+    setLoading(false)
+
   }
 
   return (
@@ -54,11 +60,15 @@ export default function Signin() {
             </Pressable>
           </View>
 
-          <TouchableOpacity className='bg-redl2 h-20 justify-center mt-2'
-            onPress={btnLoginClicked}
-          >
-            <Text className='text-center text-2xl text-white font-extrabold'>Sign In</Text>
-          </TouchableOpacity>
+          {loading ?
+            <ActivityIndicator color={"red"} size={'large'} />
+            :
+            <TouchableOpacity className='bg-redl2 h-20 justify-center mt-2'
+              onPress={btnLoginClicked}
+            >
+              <Text className='text-center text-2xl text-white font-extrabold'>Sign In</Text>
+            </TouchableOpacity>
+          }
 
           <Pressable onPress={() => router.push('signUp')}>
             <View className='gap-2 justify-center items-center mt-12 pr-6'>

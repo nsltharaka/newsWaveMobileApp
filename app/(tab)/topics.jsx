@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useFocusEffect, useRouter } from 'expo-router'
 import React, { useCallback, useState } from 'react'
-import { ScrollView, TouchableOpacity, View } from 'react-native'
+import { Alert, ScrollView, TouchableOpacity, View } from 'react-native'
 import Topic from '../../components/Topic'
 import { getAllTopicsForUser } from '../../lib/api'
 
@@ -16,13 +16,18 @@ export default function Topics() {
       console.log("fetching data on topics page...");
 
       const fetchData = async () => {
-        const data = await getAllTopicsForUser()
-        setTopics(data)
+        try {
+          const data = await getAllTopicsForUser()
+          setTopics(data)
+
+        } catch (error) {
+          Alert.alert('Network Error', 'please check your network connection and try again')
+        }
       }
 
       fetchData()
 
-    }, [])
+    }, []) 
   )
 
   return (
