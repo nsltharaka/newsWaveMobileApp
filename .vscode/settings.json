@@ -3,6 +3,7 @@
         "appstore",
         "googleusercontent",
         "Ionicons",
+        "Pressable",
         "Signin",
         "Signup"
     ],
