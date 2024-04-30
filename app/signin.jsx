@@ -70,7 +70,7 @@ export default function Signin() {
             </TouchableOpacity>
           }
 
-          <Pressable onPress={() => router.push('signUp')}>
+          <Pressable onPress={() => router.replace('signUp')}>
             <View className='gap-2 justify-center items-center mt-12 pr-6'>
               <Text className='text-neutral-500 font-semibold'>Don't have an account?</Text>
               <Text className='text-redl2 font-bold'>Sign Up</Text>
