@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { ActivityIndicator, Alert, FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, FlatList, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import Colors from '../../constants/Colors';
 import validateURL from '../../lib/urlValidator'
 import { addFollowTopicFeed } from '../../lib/api';
@@ -26,16 +26,18 @@ export default function Page() {
     }
 
     if (formData.sources.length === 0) {
-      Alert.alert('validation', 'at least one source is required in order to add a topic.')
+      Alert.alert('Validation', 'at least one source is required in order to add a topic.')
       return
     }
 
     setSubmissionProcessing(true)
     try {
       await addFollowTopicFeed(formData)
+      ToastAndroid.show("topic added", ToastAndroid.SHORT)
 
     } catch (error) {
       console.log(error);
+      Alert, alert("Error", "failed to add topic. please check your internet connection.")
 
     } finally {
       setSubmissionProcessing(false)
