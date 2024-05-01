@@ -55,10 +55,10 @@ export default function Page() {
 
     setValidationProcessing(true)
     try {
-      const [isValid, errorMsg] = await validateURL(sourceText)
+      const [isValid, errorMsg] = await validateURL(sourceText.trim())
 
       if (isValid) {
-        setFormData({ ...formData, sources: [...formData.sources, sourceText] })
+        setFormData({ ...formData, sources: [...formData.sources, sourceText.trim()] })
         setSourceText('')
       } else {
         Alert.alert('Validation Failed', errorMsg)
