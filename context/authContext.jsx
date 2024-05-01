@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as SecureStore from 'expo-secure-store';
 import { createContext, useContext, useEffect, useState } from "react";
-import { Alert } from "react-native";
+import { Alert, ToastAndroid } from "react-native";
 
 export const AuthContext = createContext()
 export const AuthContextProvider = ({ children }) => {
@@ -28,6 +28,7 @@ export const AuthContextProvider = ({ children }) => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${userData.api_key}`
 
             setUser(userData)
+            ToastAndroid.show("Registration Successful", ToastAndroid.SHORT)
 
         } catch ({ response, request }) {
             if (response) {
@@ -101,7 +102,7 @@ export const AuthContextProvider = ({ children }) => {
             return
         }
 
-        console.log("no persisted user");
+        console.log("no existing user");
 
     }, [])
 
