@@ -47,7 +47,7 @@ export default function Topics() {
 
             {
               topics.map(t => (
-                <TouchableOpacity key={t.id} activeOpacity={0.6}>
+                <TouchableOpacity key={t.id} activeOpacity={0.6} onPress={() => router.push("screens/" + t.id)}>
                   <Topic
                     imageSrc={t.img_url}
                     lastUpdated={t.updated_at}
@@ -62,10 +62,10 @@ export default function Topics() {
         </View>
         :
         <EmptyScreen
-            infoMsg={"No topics to show. Start by adding one or more topics."}
-            linkText={"Add Topic"}
-            onPressHandler={() => router.push("screens/addTopic")}
-          />
+          infoMsg={"No topics to show. Start by adding one or more topics."}
+          linkText={"Add Topic"}
+          onPressHandler={() => router.push("screens/addTopic")}
+        />
 
       }
     </>

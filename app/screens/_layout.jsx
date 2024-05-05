@@ -16,6 +16,7 @@ export default function _layout() {
             <Stack.Screen name='addTopic' options={{
                 headerTitle: "Add Topic",
             }} />
+            <Stack.Screen name='[topicId]'/>
         </Stack>
     )
 }

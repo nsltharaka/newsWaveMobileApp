@@ -5,6 +5,8 @@
         "Ionicons",
         "Pressable",
         "Signin",
-        "Signup"
+        "Signup",
+        "unfollow",
+        "unfollows"
     ],
 }
