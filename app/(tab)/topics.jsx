@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useFocusEffect, useRouter } from 'expo-router'
 import React, { useCallback, useState } from 'react'
-import { Alert, ScrollView, TouchableOpacity, View } from 'react-native'
+import { Alert, RefreshControl, ScrollView, TouchableOpacity, View } from 'react-native'
 import Topic from '../../components/Topic'
 import { getAllTopicsForUser } from '../../lib/api'
 import EmptyScreen from '../../components/EmptyScreen'
@@ -11,23 +11,28 @@ export default function Topics() {
   const router = useRouter()
 
   const [topics, setTopics] = useState([])
+  const [refreshing, setRefreshing] = useState(true)
+
+  const fetchPosts = () => {
+    (async () => {
+      console.log("fetching data on topics page...");
+
+      try {
+        const data = await getAllTopicsForUser()
+        setTopics(data)
+
+      } catch (error) {
+        Alert.alert('Could not get topics', 'please check your network connection and try again')
+      }
+
+      setRefreshing(false)
+
+    })()
+  }
 
   useFocusEffect(
     useCallback(() => {
-      console.log("fetching data on topics page...");
-
-      const fetchData = async () => {
-        try {
-          const data = await getAllTopicsForUser()
-          setTopics(data)
-
-        } catch (error) {
-          Alert.alert('Could not get topics', 'please check your network connection and try again')
-        }
-      }
-
-      fetchData()
-
+      fetchPosts()
     }, [])
   )
 
@@ -43,13 +48,18 @@ export default function Topics() {
           </TouchableOpacity>
 
 
-          <ScrollView overScrollMode='never' showsVerticalScrollIndicator={false} >
+          <ScrollView overScrollMode='never' showsVerticalScrollIndicator={false}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => fetchPosts()} />}
+          >
 
             {
               topics.map(t => (
+                <TouchableOpacity key={t.id} onPress={() => router.push(`screens/${t.id}`)}>
                   <Topic
+                    key={t.id}
                     topic={t}
                   />
+                </TouchableOpacity>
               ))
             }
 

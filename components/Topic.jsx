@@ -1,25 +1,17 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
-import { Entypo } from '@expo/vector-icons';
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-} from 'react-native-popup-menu';
-import ContextMenu from './ContextMenu';
+import { Feather, FontAwesome6 } from '@expo/vector-icons';
+import React from 'react';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 
 const defaultImage = require("../assets/images/defaultTopicImage.jpg")
 
 export default function Topic({ topic }) {
-
-  const [contextMenuLoading, setContextMenuVisible] = useState(false)
-
   return (
     <View className='w-full relative'>
+      {/* mask */}
       <View className='bg-black opacity-50 w-full h-full absolute z-10 justify-end'></View>
 
-      <View className='z-20 absolute bottom-12 left-8 right-4 gap-1'>
+      {/* topic info container */}
+      <View className='z-20 absolute bottom-12 left-8 right-20 gap-1'>
         <Text
           className='text-white text-4xl'
           style={{
@@ -41,6 +33,7 @@ export default function Topic({ topic }) {
 
       </View>
 
+      {/* image */}
       <View className='items-center z-0'>
         <Image source={topic.img_url ? { uri: topic.img_url } : defaultImage} resizeMode='cover' style={{
           width: "100%",
@@ -48,21 +41,22 @@ export default function Topic({ topic }) {
         }} />
       </View>
 
-      {/* three dot menu */}
-      <View className='z-20 w-20 items-center justify-center aspect-square absolute top-0 -right-2'>
-        <Menu>
-          <MenuTrigger customStyles={{
-            TriggerTouchableComponent: () => (<Entypo name="dots-three-vertical" size={24} color="white" />)
-          }} />
-          <MenuOptions>
-            <MenuOption onSelect={() => alert(`Save`)} text='Save' />
-            <MenuOption onSelect={() => alert(`Delete`)} >
-              <Text style={{ color: 'red' }}>Delete</Text>
-            </MenuOption>
-            <MenuOption onSelect={() => alert(`Not called`)} disabled={true} text='Disabled' />
-          </MenuOptions>
-        </Menu>
+      <View className='z-20 flex-row absolute top-4 right-0'>
+        {/* edit icon */}
+        <TouchableOpacity className='w-14 aspect-square items-center justify-center'
+          onPress={() => console.log("edit ", topic.id)}
+        >
+          <FontAwesome6 name="edit" size={24} color="white" />
+        </TouchableOpacity>
+        {/* unfollow icon */}
+        <TouchableOpacity className='w-14 aspect-square items-center justify-center'
+          onPress={() => console.log("delete ", topic.id)}
+
+        >
+          <Feather name="trash-2" size={24} color="white" />
+        </TouchableOpacity>
       </View>
+
     </View>
   )
 }
