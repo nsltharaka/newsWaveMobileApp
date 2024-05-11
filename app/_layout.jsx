@@ -5,6 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from "react";
 import { AuthContextProvider, useAuth } from "../context/authContext";
 import "../global.css";
+import { MenuProvider } from 'react-native-popup-menu';
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -57,7 +58,9 @@ export default function RootLayout() {
 
     return (
         <AuthContextProvider>
-            <MainLayout />
+            <MenuProvider>
+                <MainLayout />
+            </MenuProvider>
         </AuthContextProvider>
     )
 }
@@ -72,7 +75,7 @@ const MainLayout = () => {
         const inApp = segments[0] === '(app)'
 
         if (user && !inApp) {
-            router.replace('(tab)') 
+            router.replace('(tab)')
 
         } else if (!user) {
             router.replace('signin')
@@ -91,7 +94,7 @@ const MainLayout = () => {
             <Stack.Screen name='forgotPassword' options={{
                 headerShown: true,
                 headerTitle: "",
-                animation : "slide_from_right"
+                animation: "slide_from_right"
             }} />
 
             <Stack.Screen name='(tab)' />

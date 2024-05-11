@@ -1,19 +1,27 @@
 import { Stack, useLocalSearchParams } from "expo-router"
 import { useEffect, useState } from "react"
 import { Text, View } from "react-native"
+import { getTopic } from "../../lib/api"
 
 export default function Page() {
 
     const param = useLocalSearchParams()
-    const [currentTopic, setCurrenTopic] = useState({
-        // props of the topic here
-        title : ""
+    const [data, setData] = useState({
+        topic : {
+            name: "",
+        },
+        feeds : [],
     })
-    
-    useEffect(() => {
 
-        // get topic info for the given topic id
-        setCurrenTopic((prev) => ({...prev, title :"Custom Topic"}))
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await getTopic(param.topicId)
+            if (data) {
+                setData(data)
+            }
+        }
+
+        fetchData()
 
     }, [])
 
@@ -21,11 +29,11 @@ export default function Page() {
         <View className="debug flex-1 items-center justify-center">
 
             <Stack.Screen options={{
-                headerTitle: currentTopic.title || "Topic",
+                headerTitle: data.topic.name || "Topic",
             }} />
 
             <Text>
-                {param.topicId}
+                {JSON.stringify(data, null, 2)}
             </Text>
 
             {/* 

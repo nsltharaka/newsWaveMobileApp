@@ -47,14 +47,9 @@ export default function Topics() {
 
             {
               topics.map(t => (
-                <TouchableOpacity key={t.id} activeOpacity={0.6} onPress={() => router.push("screens/" + t.id)}>
                   <Topic
-                    imageSrc={t.img_url}
-                    lastUpdated={t.updated_at}
-                    sourceCount={t.source_count}
-                    topic={t.name}
+                    topic={t}
                   />
-                </TouchableOpacity>
               ))
             }
 
