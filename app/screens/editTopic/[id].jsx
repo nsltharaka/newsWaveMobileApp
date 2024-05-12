@@ -120,7 +120,7 @@ export default function Page() {
       <View className='gap-3 bg-white px-4  py-8 shadow-2xl'>
         <Text className='text-3xl font-bold text-neutral-600'>Topic</Text>
         <TextInput
-          value={formData.title}
+          defaultValue={formData.title}
           className='h-16 border-b-[2px] border-redl2 text-neutral-700 text-xl'
           cursorColor='black'
           placeholder='(required)'

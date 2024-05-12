@@ -1,9 +1,9 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useFocusEffect, useRouter } from 'expo-router'
 import React, { useCallback, useState } from 'react'
-import { Alert, RefreshControl, ScrollView, TouchableOpacity, View } from 'react-native'
+import { Alert, RefreshControl, ScrollView, ToastAndroid, TouchableOpacity, View } from 'react-native'
 import Topic from '../../components/Topic'
-import { getAllTopicsForUser } from '../../lib/api'
+import { getAllTopicsForUser, unfollowTopic } from '../../lib/api'
 import EmptyScreen from '../../components/EmptyScreen'
 
 export default function Topics() {
@@ -53,14 +53,28 @@ export default function Topics() {
           >
 
             {
-              topics.map(t => (
-                <TouchableOpacity key={t.id} onPress={() => router.push(`screens/${t.id}`)}>
-                  <Topic
-                    key={t.id}
-                    topic={t}
-                  />
-                </TouchableOpacity>
-              ))
+              topics.map(t => {
+
+                const onUnfollow = async () => {
+                  try {
+                    await unfollowTopic(t.id)
+                    ToastAndroid.show("topic unfollowed", ToastAndroid.SHORT)
+                    fetchPosts()
+                  } catch (error) {
+                    Alert.alert("Error", "couldn't unfollow the topic.")
+                    return
+                  }
+                }
+
+                return (
+                  <TouchableOpacity key={t.id} onPress={() => router.push(`screens/${t.id}`)}>
+                    <Topic
+                      key={t.id}
+                      topic={t}
+                      onUnfollowHandler={onUnfollow}
+                    />
+                  </TouchableOpacity>)
+              })
             }
 
           </ScrollView>
