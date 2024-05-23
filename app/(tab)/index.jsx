@@ -1,22 +1,29 @@
 import { useRouter } from 'expo-router'
 import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, Alert, FlatList, RefreshControl, Text, View } from 'react-native'
+import { Alert, FlatList, Text, View } from 'react-native'
 import EmptyScreen from '../../components/EmptyScreen'
+import Post from '../../components/Post'
 import { getPosts, refreshHome } from '../../lib/api'
+import ListEnd from '../../components/ListEnd'
 
 export default function HomePage() {
 
-  const limit = 10
+  const limit = 20
+  const initialPage = `/posts/all?limit=${limit}&offset=${0}`
 
   const router = useRouter()
 
   const [posts, setPosts] = useState([])
-  const [nextPage, setNextPage] = useState(`/posts/all?limit=${limit}&offset=${0}`)
+  const [nextPage, setNextPage] = useState(initialPage)
   const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
 
   const fetchPosts = async () => {
     if (loading) return
+
+    if (!nextPage) {
+      return
+    }
 
     console.log("fetching posts...");
     try {
@@ -24,11 +31,8 @@ export default function HomePage() {
       const data = await getPosts(nextPage)
       console.log("fetched ", data.info.count);
 
-      if (data.posts.length === 0) {
-        return
-      }
-
-      setPosts([...posts, data.posts])
+      // setPosts([...posts, ...data.posts])
+      setPosts([...posts, ...data.posts])
       setNextPage(data.info.next)
 
     } catch (error) {
@@ -39,22 +43,33 @@ export default function HomePage() {
     }
   }
 
+  const onRefresh = async () => {
+    setRefreshing(true)
+    setPosts([])
+    setNextPage(initialPage)
+    await refreshHome()
+    setRefreshing(false)
+  }
+
   useEffect(() => { fetchPosts() }, [])
 
   return (
-    <View className='flex-1 bg-green-200 '>
+    <View className='flex-1 bg-black'>
       <FlatList
         overScrollMode='never'
         showsVerticalScrollIndicator={false}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => refreshHome()} />}
+        contentContainerStyle={{ gap: 3 }}
 
         data={posts}
-        renderItem={({ item }) => <Text>{JSON.stringify(item, null, 2)}</Text>}
+        renderItem={({ item }) => <Post post={item} />}
+
+        refreshing={loading && refreshing}
+        onRefresh={onRefresh}
 
         onEndReached={() => fetchPosts()}
         onEndReachedThreshold={3}
 
-        ListFooterComponent={() => loading && <ActivityIndicator size={"large"} color={"red"} />}
+        ListFooterComponent={() => <ListEnd title={"You're all caught up"} message={"You've seen all the posts from your feeds."} />}
 
         ListEmptyComponent={() => (
           <EmptyScreen
