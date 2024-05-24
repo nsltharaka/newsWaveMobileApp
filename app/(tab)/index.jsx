@@ -1,17 +1,14 @@
-import { useRouter } from 'expo-router'
 import React, { useEffect, useState } from 'react'
-import { Alert, FlatList, Text, View } from 'react-native'
+import { Alert, FlatList, View } from 'react-native'
 import EmptyScreen from '../../components/EmptyScreen'
+import ListEnd from '../../components/ListEnd'
 import Post from '../../components/Post'
 import { getPosts, refreshHome } from '../../lib/api'
-import ListEnd from '../../components/ListEnd'
 
 export default function HomePage() {
 
-  const limit = 20
-  const initialPage = `/posts/all?limit=${limit}&offset=${0}`
-
-  const router = useRouter()
+  // limit is how many posts per page
+  const initialPage = `/posts/all?page=1`
 
   const [posts, setPosts] = useState([])
   const [nextPage, setNextPage] = useState(initialPage)
@@ -19,66 +16,82 @@ export default function HomePage() {
   const [refreshing, setRefreshing] = useState(false)
 
   const fetchPosts = async () => {
+    // if loading do not trigger another fetch
     if (loading) return
 
+    // if there is no next page, nothing to fetch
     if (!nextPage) {
       return
     }
 
-    console.log("fetching posts...");
     try {
       setLoading(true)
-      const data = await getPosts(nextPage)
-      console.log("fetched ", data.info.count);
 
-      // setPosts([...posts, ...data.posts])
+      // get next page
+      const data = await getPosts(nextPage)
+      // new posts are appending to the existing posts
       setPosts([...posts, ...data.posts])
+
+      // next page link to fetch posts
       setNextPage(data.info.next)
 
     } catch (error) {
       Alert.alert("Error fetching posts", error)
 
-    } finally {
-      setLoading(false)
     }
+
+    setLoading(false)
+
   }
 
   const onRefresh = async () => {
-    setRefreshing(true)
+
     setPosts([])
     setNextPage(initialPage)
+
+    setRefreshing(true)
     await refreshHome()
     setRefreshing(false)
+
   }
 
-  useEffect(() => { fetchPosts() }, [])
+  useEffect(() => {
+    if (loading || refreshing) return
+
+    console.log("effect running...")
+    fetchPosts()
+  }, [refreshing])
 
   return (
-    <View className='flex-1 bg-black'>
-      <FlatList
-        overScrollMode='never'
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ gap: 3 }}
+    <View className='flex-1 bg-white'>
+      {
+        posts.length > 0 ?
+          <FlatList
+            className='bg-black'
+            overScrollMode='never'
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ gap: 3 }}
 
-        data={posts}
-        renderItem={({ item }) => <Post post={item} />}
+            data={posts}
+            renderItem={({ item }) => <Post post={item} />}
 
-        refreshing={loading && refreshing}
-        onRefresh={onRefresh}
+            refreshing={refreshing}
+            onRefresh={() => onRefresh()}
 
-        onEndReached={() => fetchPosts()}
-        onEndReachedThreshold={3}
+            onEndReached={() => !loading && !refreshing && fetchPosts()}
+            onEndReachedThreshold={3}
 
-        ListFooterComponent={() => <ListEnd title={"You're all caught up"} message={"You've seen all the posts from your feeds."} />}
-
-        ListEmptyComponent={() => (
-          <EmptyScreen
-            infoMsg={"Add topics to see latest updates."}
-            linkText={"Add Topic"}
-            onPressHandler={() => router.push("screens/addTopic")}
+            ListFooterComponent={() => <ListEnd title={"You're all caught up"} message={"You've seen all the posts from your feeds."} />}
           />
-        )}
-      />
+
+          :
+
+          <EmptyScreen
+            infoMsg={"No posts to fetch."}
+            linkText={"Tap to refresh"}
+            onPressHandler={() => onRefresh()}
+          />
+      }
     </View>
   )
 }
