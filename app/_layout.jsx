@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { AuthContextProvider, useAuth } from "../context/authContext";
 import "../global.css";
 import { MenuProvider } from 'react-native-popup-menu';
+import Colors from '../constants/Colors';
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -76,7 +77,7 @@ const MainLayout = () => {
 
         if (user && !inApp) {
             router.replace('(tab)')
-
+            
         } else if (!user) {
             router.replace('signin')
         }
@@ -94,7 +95,11 @@ const MainLayout = () => {
             <Stack.Screen name='forgotPassword' options={{
                 headerShown: true,
                 headerTitle: "",
-                animation: "slide_from_right"
+                animation: "slide_from_right",
+                headerStyle :{
+                    backgroundColor : Colors.palette.redl1,
+                },
+                headerTintColor : "white",
             }} />
 
             <Stack.Screen name='(tab)' />
