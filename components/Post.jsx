@@ -24,12 +24,13 @@ const Post = ({ post }) => {
         >
 
             {/* topic container */}
-            <Text
-                style={{ fontFamily: 'passionOneRegular' }}
-                className='bg-redl1 text-2xl text-white px-2 self-start'
-            >
-                #{post.topic}
-            </Text>
+            {post.topic &&
+                <Text
+                    style={{ fontFamily: 'passionOneRegular' }}
+                    className='bg-redl1 text-2xl text-white px-2 self-start'
+                >
+                    #{post.topic}
+                </Text>}
 
             {/* title Container */}
             <Text

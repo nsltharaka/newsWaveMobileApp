@@ -91,8 +91,6 @@ export const AuthContextProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        console.log("running useeffect on authContext...");
-
         const existingUserString = SecureStore.getItem("currentUser")
         if (existingUserString) {
             existingUser = JSON.parse(existingUserString)

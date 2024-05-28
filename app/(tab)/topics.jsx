@@ -2,9 +2,9 @@ import { Ionicons } from '@expo/vector-icons'
 import { useFocusEffect, useRouter } from 'expo-router'
 import React, { useCallback, useState } from 'react'
 import { Alert, RefreshControl, ScrollView, ToastAndroid, TouchableOpacity, View } from 'react-native'
+import EmptyScreen from '../../components/EmptyScreen'
 import Topic from '../../components/Topic'
 import { getAllTopicsForUser, unfollowTopic } from '../../lib/api'
-import EmptyScreen from '../../components/EmptyScreen'
 
 export default function Topics() {
 
@@ -15,13 +15,14 @@ export default function Topics() {
 
   const fetchPosts = () => {
     (async () => {
-      console.log("fetching data on topics page...");
 
       try {
         const data = await getAllTopicsForUser()
         setTopics(data)
 
       } catch (error) {
+        console.log(error);
+        // Alert.alert('Could not get topics', JSON.stringify(error, null, 2))
         Alert.alert('Could not get topics', 'please check your network connection and try again')
       }
 

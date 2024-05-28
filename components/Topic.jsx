@@ -1,14 +1,10 @@
-import { Feather, FontAwesome6 } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
 import React from 'react';
-import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
+import { getTimeDifferenceString } from '../lib/time';
 
 const defaultImage = require("../assets/images/defaultTopicImage.jpg")
 
-export default function Topic({ topic, onUnfollowHandler }) {
-
-  const router = useRouter()
-
+export default function Topic({ topic }) {
   return (
     <View className='w-full relative'>
       {/* mask */}
@@ -27,7 +23,7 @@ export default function Topic({ topic, onUnfollowHandler }) {
 
         <View>
           <Text className='text-white italic'>
-            last updated ● {topic.updated_at}
+            last updated ● {getTimeDifferenceString(new Date(topic.updated_at))}
           </Text>
 
           <Text className='text-white italic'>
@@ -44,39 +40,6 @@ export default function Topic({ topic, onUnfollowHandler }) {
           height: 300,
         }} />
       </View>
-
-      {/* actions container */}
-      <View className='z-20 flex-row absolute top-4 right-0'>
-
-        {/* edit icon */}
-        <TouchableOpacity className='w-14 aspect-square items-center justify-center'
-          onPress={() => router.push(`screens/editTopic/${topic.id}`)}
-        ><FontAwesome6 name="edit" size={24} color="white" /></TouchableOpacity>
-
-        {/* unfollow icon */}
-        <TouchableOpacity className='w-14 aspect-square items-center justify-center'
-          onPress={() => {
-            Alert.alert("Unfollow Topic", `Do you really want to unfollow this topic?`, [
-              {
-                text: "Yes",
-                onPress: () => {
-                  onUnfollowHandler()
-                },
-              },
-              {
-                text: "No",
-                isPreferred: true,
-                style: 'cancel'
-              },
-            ])
-          }}
-
-        >
-          <Feather name="trash-2" size={24} color="white" />
-        </TouchableOpacity>
-
-      </View>
-
     </View>
   )
 }

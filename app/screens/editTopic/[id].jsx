@@ -3,12 +3,14 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, FlatList, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import Colors from '../../../constants/Colors';
+import { useGlobalContext } from '../../../context/globalContext';
+import { updateTopic } from '../../../lib/api';
 import validateURL from '../../../lib/urlValidator';
-import { getTopic, updateTopic } from '../../../lib/api';
 
 export default function Page() {
 
   const param = useLocalSearchParams()
+  const { selectedTopic } = useGlobalContext()
 
   const router = useRouter()
 
@@ -21,23 +23,10 @@ export default function Page() {
   })
 
   useEffect(() => {
-    // get the topic and populate form
-    (async () => {
-      try {
-        const data = await getTopic(param.id)
-        console.log(JSON.stringify(data, null, 2));
-
-        setFormData({
-          title: data.topic.name,
-          sources: data.feeds.map(f => f.url),
-        })
-
-      } catch (error) {
-        Alert.alert("Error", "could not get topic information.")
-        return
-      }
-    })()
-
+    setFormData({
+      title: selectedTopic.topic.name,
+      sources: selectedTopic.feeds.map(f => f.url),
+    })
   }, [])
 
   const btnSubmitClicked = async () => {

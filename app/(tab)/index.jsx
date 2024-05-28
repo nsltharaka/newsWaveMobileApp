@@ -58,7 +58,6 @@ export default function HomePage() {
   useEffect(() => {
     if (loading || refreshing) return
 
-    console.log("effect running...")
     fetchPosts()
   }, [refreshing])
 

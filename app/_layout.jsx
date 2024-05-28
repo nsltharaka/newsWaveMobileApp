@@ -7,6 +7,7 @@ import { AuthContextProvider, useAuth } from "../context/authContext";
 import "../global.css";
 import { MenuProvider } from 'react-native-popup-menu';
 import Colors from '../constants/Colors';
+import { GlobalContextProvider } from '../context/globalContext';
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -58,11 +59,13 @@ export default function RootLayout() {
     }
 
     return (
-        <AuthContextProvider>
-            <MenuProvider>
-                <MainLayout />
-            </MenuProvider>
-        </AuthContextProvider>
+        <GlobalContextProvider>
+            <AuthContextProvider>
+                <MenuProvider>
+                    <MainLayout />
+                </MenuProvider>
+            </AuthContextProvider>
+        </GlobalContextProvider>
     )
 }
 
@@ -77,7 +80,8 @@ const MainLayout = () => {
 
         if (user && !inApp) {
             router.replace('(tab)')
-            
+            // router.replace('screens/[topicId]')
+
         } else if (!user) {
             router.replace('signin')
         }
@@ -96,10 +100,10 @@ const MainLayout = () => {
                 headerShown: true,
                 headerTitle: "",
                 animation: "slide_from_right",
-                headerStyle :{
-                    backgroundColor : Colors.palette.redl1,
+                headerStyle: {
+                    backgroundColor: Colors.palette.redl1,
                 },
-                headerTintColor : "white",
+                headerTintColor: "white",
             }} />
 
             <Stack.Screen name='(tab)' />
