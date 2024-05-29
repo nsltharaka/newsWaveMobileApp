@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { ActivityIndicator, Alert, FlatList, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import Colors from '../../constants/Colors';
 import validateURL from '../../lib/urlValidator'
-import { addFollowTopicFeed } from '../../lib/api';
+import { addFollowTopicFeed, handleAxiosError } from '../../lib/api';
 import { useRouter } from 'expo-router';
+import axios from 'axios';
 
 export default function Page() {
 
@@ -54,15 +55,20 @@ export default function Page() {
     }
 
     setValidationProcessing(true)
-    try {
-      const [isValid, errorMsg] = await validateURL(sourceText.trim())
 
-      if (isValid) {
-        setFormData({ ...formData, sources: [...formData.sources, sourceText.trim()] })
-        setSourceText('')
-      } else {
-        Alert.alert('Validation Failed', errorMsg)
+    try {
+
+      const resp = await axios.get(`/feeds/verify?feed-url=${sourceText.trim()}`, { timeout: 5000 })
+      if (resp.data.error) {
+        Alert.alert('Validation Failed', resp.data.error)
+        return
       }
+
+      setFormData({ ...formData, sources: [...formData.sources, sourceText.trim()] })
+      setSourceText('')
+
+    } catch (error) {
+      handleAxiosError(error)
 
     } finally {
       setValidationProcessing(false)

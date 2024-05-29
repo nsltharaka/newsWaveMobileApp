@@ -40,7 +40,8 @@ const Post = ({ post }) => {
 
             {/* description container */}
             <Text
-                className='text-justify text-xl'
+                className='text-justify text-xl text-ellipsis truncate'
+                numberOfLines={10}
             >{post.description}
             </Text>
 

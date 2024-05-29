@@ -1,1 +1,2 @@
 https://dev.to/feed
+http://www.sliate.ac.lk/?format=feed&type=rss
