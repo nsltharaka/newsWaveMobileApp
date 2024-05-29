@@ -23,7 +23,7 @@ export default function TopicHeader({ topic }) {
 
         <View className='gap-3 border-neutral-500'>
             {/* topic image */}
-            <Image src={topic.img_url} className='w-[100%] h-[250]' resizeMode="cover" />
+            <Image src={topic.img_url} style={{ width: "100%", height: 250 }} resizeMode="cover" />
 
             <View className='px-4 gap-2'>
                 {/* topic name */}
