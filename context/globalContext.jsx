@@ -4,11 +4,13 @@ export const GlobalContext = createContext()
 export const GlobalContextProvider = ({ children }) => {
 
     const [selectedTopic, setSelectedTopic] = useState({})
+    const [extractedFeeds, setExtractedFeeds] = useState([])
 
     return (
         <GlobalContext.Provider
             value={{
-                selectedTopic, setSelectedTopic
+                selectedTopic, setSelectedTopic,
+                extractedFeeds, setExtractedFeeds
             }}
         >
             {children}

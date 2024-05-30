@@ -1,11 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
-import React, { useState } from 'react';
-import { ActivityIndicator, Alert, FlatList, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
-import Colors from '../../constants/Colors';
-import validateURL from '../../lib/urlValidator'
-import { addFollowTopicFeed, handleAxiosError } from '../../lib/api';
-import { useRouter } from 'expo-router';
 import axios from 'axios';
+import { useRouter } from 'expo-router';
+import isUrlHttp from 'is-url-http';
+import React, { useState } from 'react';
+import { ActivityIndicator, Alert, FlatList, KeyboardAvoidingView, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import Colors from '../../constants/Colors';
+import { addFollowTopicFeed, handleAxiosError } from '../../lib/api';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function Page() {
 
@@ -18,6 +19,9 @@ export default function Page() {
     title: "",
     sources: [],
   })
+
+  const [searching, setSearching] = useState(false)
+  const [txtUrl, setTxtUrl] = useState("")
 
   const btnSubmitClicked = async () => {
 
@@ -42,7 +46,11 @@ export default function Page() {
 
     } finally {
       setSubmissionProcessing(false)
-      router.back()
+      setFormData({
+        title: "",
+        sources: [],
+      })
+      router.replace("/(tab)/topics")
     }
 
   }
@@ -81,9 +89,34 @@ export default function Page() {
     setFormData({ ...formData, sources: filteredArr })
   }
 
+  const btnSearchClicked = async () => {
+
+    //validate url
+    if (!isUrlHttp(txtUrl)) {
+      ToastAndroid.show("Enter a valid URL", ToastAndroid.SHORT)
+      return
+    }
+
+    setSearching(true)
+    try {
+      const resp = await axios.get(`https://feedsearch.dev/api/v1/search?url=${txtUrl}`, { timeout: 5000 })
+      setFormData({ ...formData, sources: [...formData.sources, ...resp.data.map(f => f.url)] })
+      setTxtUrl('')
+
+    } catch (error) {
+      if (error.response) {
+        Alert.alert("Error", "Couldn't find any feeds for the given URL.")
+        return
+      }
+      handleAxiosError(error)
+
+    } finally {
+      setSearching(false)
+    }
+  }
+
   const ListItem = ({ content }) => (
     <View className='mb-2 flex-row'>
-
       <View className='flex-row items-center gap-2 max-w-fit bg-gray-200 pl-4 pr-1 py-1 rounded-full'>
         <Text
           numberOfLines={2}
@@ -93,12 +126,11 @@ export default function Page() {
           <Ionicons name="close-circle-sharp" size={24} color={"gray"} />
         </TouchableOpacity>
       </View>
-
     </View>
   )
 
   return (
-    <View className='flex-1 p-4 gap-4'>
+    <KeyboardAwareScrollView className='flex-1 p-4 gap-4' behavior='height'>
       <View className='gap-3 bg-white px-4  py-8 shadow-2xl'>
         <Text className='text-3xl font-bold text-neutral-600'>Topic</Text>
         <TextInput
@@ -109,6 +141,7 @@ export default function Page() {
           onChangeText={(txt) => setFormData({ ...formData, title: txt.trim() })}
         />
       </View>
+
       <View className='gap-3 bg-white px-4  py-8 shadow-2xl'>
         <Text className='text-3xl font-bold text-neutral-600'>Sources</Text>
 
@@ -138,6 +171,30 @@ export default function Page() {
         </View>
       </View>
 
+      <Text className='text-center text-neutral-500 font-semibold text-lg'>or</Text>
+
+      <View className='gap-3 bg-white px-4  py-8 shadow-2xl'>
+        <Text className='text-3xl font-bold text-neutral-600'>Enter URL: </Text>
+        <View className='flex-row gap-2 items-center border-b-[2px] border-redl2 pr-3'>
+          <TextInput
+            value={txtUrl}
+            clearTextOnFocus={true}
+            className='h-16 text-neutral-700 text-xl flex-1'
+            cursorColor='black'
+            placeholder='https://'
+            onChangeText={(txt) => setTxtUrl(txt)}
+          />
+          {searching ?
+            <ActivityIndicator color={"red"} size={'small'} />
+            :
+            <TouchableOpacity onPress={btnSearchClicked}>
+              <Ionicons name="search" size={32} color={Colors.palette.redl2} />
+            </TouchableOpacity>
+          }
+
+        </View>
+      </View>
+
       <View className='h-16 justify-center'>
         {submissionProcessing ?
           <ActivityIndicator color={"red"} size={'large'} />
@@ -150,7 +207,7 @@ export default function Page() {
         }
       </View>
 
-    </View>
+    </KeyboardAwareScrollView>
   )
 }
 

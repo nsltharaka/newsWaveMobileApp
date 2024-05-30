@@ -8,6 +8,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
+        tabBarHideOnKeyboard: true,
         tabBarStyle: {
           height: 70,
           backgroundColor: 'black',
@@ -52,6 +53,11 @@ export default function TabLayout() {
             <Ionicons name="search" size={28} color="white" />
           </View>
         )
+      }} />
+
+      <Tabs.Screen name='addtopic' options={{
+        title: "Add Topic",
+        tabBarIcon: ({ color }) => <Ionicons name="add-circle-sharp" size={30} color={color} />,
       }} />
 
       <Tabs.Screen name='explore' options={{

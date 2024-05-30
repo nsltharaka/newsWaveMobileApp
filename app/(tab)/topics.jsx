@@ -40,19 +40,11 @@ export default function Topics() {
   return (
     <>
       {topics.length != 0 ?
-        <View className='flex-1 relative'>
-
-          <TouchableOpacity
-            onPress={() => router.push('screens/addTopic')}
-            className='w-20 rounded-full aspect-square bg-redl2 absolute bottom-8 right-7 z-30 items-center justify-center'>
-            <Ionicons name='add' size={30} color={"white"} />
-          </TouchableOpacity>
-
+        <View className='flex-1'>
 
           <ScrollView overScrollMode='never' showsVerticalScrollIndicator={false}
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => fetchPosts()} />}
           >
-
             {
               topics.map(t => {
 
@@ -77,7 +69,6 @@ export default function Topics() {
                   </TouchableOpacity>)
               })
             }
-
           </ScrollView>
         </View>
         :

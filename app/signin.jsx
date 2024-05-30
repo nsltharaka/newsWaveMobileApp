@@ -2,9 +2,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { ActivityIndicator, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, KeyboardAvoidingView, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Colors from '../constants/Colors';
 import { useAuth } from '../context/authContext';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function Signin() {
   const router = useRouter()
@@ -30,7 +31,7 @@ export default function Signin() {
   }
 
   return (
-    <View className='flex-1'>
+    <KeyboardAwareScrollView className='flex-1'>
       <StatusBar style='dark' />
       <View style={{ marginTop: 30 }} className='flex-1 px-6 gap-12'>
 
@@ -80,6 +81,6 @@ export default function Signin() {
         </View>
 
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   )
 }

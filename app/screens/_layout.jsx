@@ -13,9 +13,6 @@ export default function _layout() {
                 backgroundColor: Colors.palette.redl2,
             }
         }}>
-            <Stack.Screen name='addTopic' options={{
-                headerTitle: "Add Topic",
-            }} />
             <Stack.Screen name='editTopic' options={{
                 headerTitle: "Edit Topic",
             }}/>
