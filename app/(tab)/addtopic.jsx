@@ -1,12 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import isUrlHttp from 'is-url-http';
-import React, { useState } from 'react';
-import { ActivityIndicator, Alert, FlatList, KeyboardAvoidingView, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { ActivityIndicator, Alert, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Colors from '../../constants/Colors';
 import { addFollowTopicFeed, handleAxiosError } from '../../lib/api';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function Page() {
 
@@ -22,6 +22,13 @@ export default function Page() {
 
   const [searching, setSearching] = useState(false)
   const [txtUrl, setTxtUrl] = useState("")
+
+  useFocusEffect(useCallback(() => {
+    setFormData({
+      title: "",
+      sources: [],
+    })
+  }, []))
 
   const btnSubmitClicked = async () => {
 
@@ -39,6 +46,10 @@ export default function Page() {
     try {
       await addFollowTopicFeed(formData)
       ToastAndroid.show("topic added", ToastAndroid.SHORT)
+      setFormData({
+        title: "",
+        sources: [],
+      })
 
     } catch (error) {
       console.log(error);
@@ -99,7 +110,7 @@ export default function Page() {
 
     setSearching(true)
     try {
-      const resp = await axios.get(`https://feedsearch.dev/api/v1/search?url=${txtUrl}`, { timeout: 5000 })
+      const resp = await axios.get(`https://feedsearch.dev/api/v1/search?url=${txtUrl}`, { timeout: 10000 })
       setFormData({ ...formData, sources: [...formData.sources, ...resp.data.map(f => f.url)] })
       setTxtUrl('')
 
@@ -130,11 +141,11 @@ export default function Page() {
   )
 
   return (
-    <KeyboardAwareScrollView className='flex-1 p-4 gap-4' behavior='height'>
+    <KeyboardAwareScrollView className='flex-1 p-4 gap-4' contentContainerStyle={{ gap: 15 }}>
       <View className='gap-3 bg-white px-4  py-8 shadow-2xl'>
         <Text className='text-3xl font-bold text-neutral-600'>Topic</Text>
         <TextInput
-          // value={formData.title}
+          selectTextOnFocus
           className='h-16 border-b-[2px] border-redl2 text-neutral-700 text-xl'
           cursorColor='black'
           placeholder='(required)'
@@ -145,10 +156,9 @@ export default function Page() {
       <View className='gap-3 bg-white px-4  py-8 shadow-2xl'>
         <Text className='text-3xl font-bold text-neutral-600'>Sources</Text>
 
-        <FlatList
-          data={formData.sources}
-          renderItem={({ item }) => <ListItem content={item} />}
-        />
+        {
+          formData.sources.map((source, index) => <ListItem key={index} content={source} />)
+        }
 
         <View className='flex-row gap-2 items-center border-b-[2px] border-redl2 pr-3'>
           <TextInput
