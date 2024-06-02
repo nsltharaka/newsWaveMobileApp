@@ -27,7 +27,7 @@ export default function Topic({ topic }) {
           </Text>
 
           <Text className='text-white italic'>
-            {topic.source_count + ` source${topic.source_count == 1 ? '' : 's'}`}
+            {topic.source_count ? topic.source_count + ` source${topic.source_count == 1 ? '' : 's'}` : ""}
           </Text>
         </View>
 
@@ -35,7 +35,7 @@ export default function Topic({ topic }) {
 
       {/* image */}
       <View className='items-center z-0'>
-        <Image source={topic.img_url ? { uri: topic.img_url } : defaultImage} resizeMode='cover' style={{
+        <Image source={topic.img_url ? { uri: topic.img_url } : defaultImage} resizeMethod='scale' resizeMode='cover' style={{
           width: "100%",
           height: 300,
         }} />

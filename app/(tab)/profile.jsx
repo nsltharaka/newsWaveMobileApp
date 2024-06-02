@@ -8,11 +8,8 @@ import { handleAxiosError } from '../../lib/api'
 export default function Profile() {
 
   const { handleLogout, user } = useAuth()
-
-  const [data, setData] = useState({
-    "topics": 0,
-    "feeds": 0,
-  })
+  const [topicCount, setTopicCount] = useState(0)
+  const [feedCount, setFeedCount] = useState(0)
 
   const btnLoginClicked = () => {
     handleLogout()
@@ -21,8 +18,7 @@ export default function Profile() {
   const fetchPostCount = async () => {
     try {
       const resp = await axios.get("/topics/count", { timeout: 5000 })
-      setData({ ...data, topics: resp.data.message })
-      fetchFeedCount()
+      setTopicCount(resp.data.message)
 
     } catch (error) {
       if (error.response) {
@@ -36,7 +32,7 @@ export default function Profile() {
   const fetchFeedCount = async () => {
     try {
       const resp = await axios.get("/feeds/count", { timeout: 5000 })
-      setData({ ...data, feeds: resp.data.message })
+      setFeedCount(resp.data.message)
 
     } catch (error) {
       if (error.response) {
@@ -49,6 +45,7 @@ export default function Profile() {
 
   useFocusEffect(useCallback(() => {
     fetchPostCount()
+    fetchFeedCount()
   }, []))
 
 
@@ -63,11 +60,11 @@ export default function Profile() {
         <View className='flex-row'>
           <View className={`items-center flex-1 gap-2 border-neutral-400 border-r`}>
             <Text className='text-2xl font-bold text-neutral-500'>Topics</Text>
-            <Text className='text-2xl text-neutral-500 font-semibold'>{data.topics}</Text>
+            <Text className='text-2xl text-neutral-500 font-semibold'>{topicCount}</Text>
           </View>
           <View className={`items-center flex-1 gap-2`}>
             <Text className={style.txtInfo}>Feeds</Text>
-            <Text className={style.txtInfoCount}>{data.feeds}</Text>
+            <Text className={style.txtInfoCount}>{feedCount}</Text>
           </View>
         </View>
       </View>
