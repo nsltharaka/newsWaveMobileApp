@@ -22,6 +22,7 @@ export default function Profile() {
     try {
       const resp = await axios.get("/topics/count", { timeout: 5000 })
       setData({ ...data, topics: resp.data.message })
+      fetchFeedCount()
 
     } catch (error) {
       if (error.response) {
@@ -47,7 +48,6 @@ export default function Profile() {
   }
 
   useFocusEffect(useCallback(() => {
-    fetchFeedCount()
     fetchPostCount()
   }, []))
 

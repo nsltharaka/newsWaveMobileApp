@@ -11,12 +11,15 @@ export default function _layout() {
             headerTintColor: 'white',
             headerStyle: {
                 backgroundColor: Colors.palette.redl2,
-            }
+            },
         }}>
             <Stack.Screen name='editTopic' options={{
                 headerTitle: "Edit Topic",
-            }}/>
-            <Stack.Screen name='[topicId]'/>
+            }} />
+
+            <Stack.Screen name='[topicId]' />
+
+            <Stack.Screen name='search' />
         </Stack>
     )
 }

@@ -1,7 +1,7 @@
 import { AntDesign, Ionicons } from '@expo/vector-icons';
-import { Tabs } from 'expo-router';
+import { Tabs, router } from 'expo-router';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import colors from '../../constants/Colors';
 
 export default function TabLayout() {
@@ -42,16 +42,25 @@ export default function TabLayout() {
           </View>
         ),
         tabBarLabel: "Home",
-        tabBarIcon: ({ color }) => <Ionicons name="home" size={28} color={color} />
+        tabBarIcon: ({ color }) => <Ionicons name="home" size={28} color={color} />,
+        headerRight: () => (
+          <TouchableOpacity onPress={() => router.push("/screens/search")}>
+            <View className='mr-4 p-3'>
+              <Ionicons name="search" size={28} color="white" />
+            </View>
+          </TouchableOpacity>
+        )
       }} />
 
       <Tabs.Screen name='topics' options={{
         title: "My Topics",
         tabBarIcon: ({ color }) => <AntDesign name="appstore1" size={28} color={color} />,
         headerRight: () => (
-          <View className='mr-8'>
-            <Ionicons name="search" size={28} color="white" />
-          </View>
+          <TouchableOpacity onPress={() => router.push("/screens/search")}>
+            <View className='mr-4 p-3'>
+              <Ionicons name="search" size={28} color="white" />
+            </View>
+          </TouchableOpacity>
         )
       }} />
 
