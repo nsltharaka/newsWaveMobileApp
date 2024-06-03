@@ -75,7 +75,7 @@ export default function Topics() {
         <EmptyScreen
           infoMsg={"No topics to show. Start by adding one or more topics."}
           linkText={"Add Topic"}
-          onPressHandler={() => router.push("screens/addTopic")}
+          onPressHandler={() => router.push("/(tab)/addtopic")}
         />
 
       }

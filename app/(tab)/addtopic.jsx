@@ -111,7 +111,7 @@ export default function Page() {
     setSearching(true)
     try {
       const resp = await axios.get(`https://feedsearch.dev/api/v1/search?url=${txtUrl}`, { timeout: 10000 })
-      setFormData({ ...formData, sources: [...formData.sources, ...resp.data.map(f => f.url)] })
+      setFormData({ ...formData, sources: [...formData.sources, ...resp.data.slice(0, 5).map(f => f.url)] })
       setTxtUrl('')
 
     } catch (error) {
