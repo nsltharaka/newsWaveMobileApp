@@ -31,7 +31,7 @@ export default function Signin() {
   }
 
   return (
-    <KeyboardAwareScrollView className='flex-1'>
+    <KeyboardAwareScrollView className='flex-1 bg-white'>
       <StatusBar style='dark' />
       <View style={{ marginTop: 30 }} className='flex-1 px-6 gap-12'>
 
