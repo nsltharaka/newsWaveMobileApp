@@ -141,7 +141,7 @@ export default function Page() {
   )
 
   return (
-    <KeyboardAwareScrollView className='flex-1 p-4 gap-4' contentContainerStyle={{ gap: 15 }}>
+    <KeyboardAwareScrollView className='flex-1 p-4 gap-4' contentContainerStyle={{ gap: 15 }} >
       <View className='gap-3 bg-white px-4  py-8 shadow-2xl'>
         <Text className='text-3xl font-bold text-neutral-600'>Topic</Text>
         <TextInput
@@ -205,7 +205,7 @@ export default function Page() {
         </View>
       </View>
 
-      <View className='h-16 justify-center'>
+      <View className='h-16 justify-center mb-8'>
         {submissionProcessing ?
           <ActivityIndicator color={"red"} size={'large'} />
           :

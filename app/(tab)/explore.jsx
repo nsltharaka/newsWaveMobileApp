@@ -7,14 +7,13 @@ import { router } from 'expo-router'
 
 export default function Explore() {
   // google news api key - 72e8df6085754244aaec2264079e395c
-  const [currentPage, setCurrentPage] = useState(1)
   const [content, setContent] = useState([])
   const [refreshing, setRefreshing] = useState(false)
 
   const fetchContent = async () => {
     if (refreshing) return
 
-    console.log("fetching ", currentPage);
+    console.log("fetching...");
     setRefreshing(true)
     try {
       const response = await axios.get('/topics', { timeout: 5000 })
@@ -31,15 +30,11 @@ export default function Explore() {
       const url = new URL("https://newsapi.org/v2/everything")
       url.searchParams.set("apiKey", "72e8df6085754244aaec2264079e395c")
       url.searchParams.set("language", "en")
-      url.searchParams.set("page", currentPage)
-      url.searchParams.set("pageSize", 100)
       url.searchParams.set("q", query)
 
       const resp = await axios.get(url.toString(), { timeout: 5000 })
       if (resp.data.articles.length > 0) {
-        setContent([...content, ...resp.data.articles])
-      } else {
-        setCurrentPage(0)
+        setContent(resp.data.articles)
       }
 
     } catch (error) {
@@ -54,52 +49,33 @@ export default function Explore() {
     setRefreshing(false)
   }
 
-  const onRefresh = () => {
-    if (refreshing) return
-
-    setContent([])
-    setCurrentPage(1)
-  }
-
   useEffect(() => {
-    if (refreshing) return
-
     fetchContent()
-  }, [currentPage])
+  }, [])
 
   return (
     <View className='bg-white items-center justify-center'>
-      {
-        content.length > 0 ?
+      <FlatList
+        className=''
+        contentContainerStyle={{ gap: 5 }}
 
-          <FlatList
-            className=''
-            contentContainerStyle={{ gap: 5 }}
+        data={content}
+        renderItem={({ item }) => (
+          <SuggestedPost item={item} />
+        )}
 
-            data={content}
-            renderItem={({ item }) => (
-              <SuggestedPost item={item} />
-            )}
+        refreshing={refreshing}
+        onRefresh={() => {
+          setContent([])
+          fetchContent()
+        }}
 
-            onEndReached={() => {
-              console.log("end reached");
-              if (currentPage) {
-                setCurrentPage(prev => prev + 1)
-              }
-            }}
-
-            ListFooterComponent={<ActivityIndicator color={"red"} size={"large"} />}
-
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
-          :
-          <EmptyScreen
-            infoMsg={"Add topics to see suggested content."}
-            linkText={"Add Topic"}
-            onPressHandler={() => router.push("/(tab)/addtopic")}
-          />
-      }
+        ListEmptyComponent={<EmptyScreen
+          infoMsg={"Add topics to see suggested content."}
+          linkText={"Add Topic"}
+          onPressHandler={() => router.push("/(tab)/addtopic")}
+        />}
+      />
     </View>
   )
 }

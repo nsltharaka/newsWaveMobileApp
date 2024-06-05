@@ -36,15 +36,20 @@ export default function Signin() {
             return
         }
 
+        if (/^\S{8,}$/.test(formData.password)) {
+            Alert.alert("Error", "password should be minimum 8 characters long and cannot contain spaces.")
+            return
+        }
+
         if (formData.password !== formData.confirmPassword) {
             Alert.alert("Error", "passwords doesn't match")
             return
         }
 
         handleRegister(
-            formData.username,
-            formData.email,
-            formData.password
+            formData.username.trim(),
+            formData.email.trim(),
+            formData.password.trim()
         )
 
     }
