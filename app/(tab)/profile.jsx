@@ -11,7 +11,7 @@ export default function Profile() {
   const [topicCount, setTopicCount] = useState(0)
   const [feedCount, setFeedCount] = useState(0)
 
-  const btnLoginClicked = () => {
+  const btnLogoutClicked = () => {
     handleLogout()
   }
 
@@ -70,7 +70,7 @@ export default function Profile() {
       </View>
 
       <TouchableOpacity className='bg-redl2 h-20 justify-center mt-2'
-        onPress={btnLoginClicked}>
+        onPress={btnLogoutClicked}>
         <Text className='text-center text-2xl text-white font-extrabold'>Log Out</Text>
       </TouchableOpacity>
 
