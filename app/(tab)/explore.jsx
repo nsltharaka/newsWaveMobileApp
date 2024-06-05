@@ -1,9 +1,9 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { ActivityIndicator, Alert, FlatList, View } from 'react-native'
 import SuggestedPost from '../../components/SuggestedPost'
 import EmptyScreen from '../../components/EmptyScreen'
-import { router } from 'expo-router'
+import { router, useFocusEffect } from 'expo-router'
 
 export default function Explore() {
   // google news api key - 72e8df6085754244aaec2264079e395c
@@ -31,8 +31,11 @@ export default function Explore() {
       url.searchParams.set("apiKey", "72e8df6085754244aaec2264079e395c")
       url.searchParams.set("language", "en")
       url.searchParams.set("q", query)
+      
+      const urlStr = url.toString().replace(/\+/g, "%20")
+      console.log(urlStr);
 
-      const resp = await axios.get(url.toString(), { timeout: 5000 })
+      const resp = await axios.get(urlStr, { timeout: 5000 })
       if (resp.data.articles.length > 0) {
         setContent(resp.data.articles)
       }
@@ -49,9 +52,10 @@ export default function Explore() {
     setRefreshing(false)
   }
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
+    if (refreshing) return
     fetchContent()
-  }, [])
+  }, []))
 
   return (
     <View className='bg-white items-center justify-center'>

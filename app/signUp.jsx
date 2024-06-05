@@ -36,7 +36,7 @@ export default function Signin() {
             return
         }
 
-        if (/^\S{8,}$/.test(formData.password)) {
+        if (!/^\S{8,}$/.test(formData.password)) {
             Alert.alert("Error", "password should be minimum 8 characters long and cannot contain spaces.")
             return
         }

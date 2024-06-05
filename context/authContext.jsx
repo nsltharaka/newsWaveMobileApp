@@ -108,7 +108,7 @@ export const AuthContextProvider = ({ children }) => {
                     setUser(existingUser)
                 }
             })
-            .catch()
+            .catch(err => { })
 
     }, [])
 

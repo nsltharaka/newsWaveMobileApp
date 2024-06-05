@@ -205,7 +205,7 @@ export default function Page() {
         </View>
       </View>
 
-      <View className='h-16 justify-center mb-8'>
+      <View className='h-16 justify-center mb-12'>
         {submissionProcessing ?
           <ActivityIndicator color={"red"} size={'large'} />
           :

@@ -10,14 +10,12 @@ export const GlobalContextProvider = ({ children }) => {
 
     useEffect(() => {
         // server check
-        axios.get("/health", { timeout: 5000 })
-            .then(resp => {
-                if (resp.status !== HttpStatusCode.Ok) {
-                    Alert.alert('Could not connect to server', 'Please try again later', [
-                        { text: 'OK', onPress: () => BackHandler.exitApp() },
-                    ]);
-                }
-                console.log("server health check passed");
+        axios.get("/health", {timeout : 3000})
+            .catch(err => {
+                console.log("server health check failed");
+                Alert.alert('Could not connect to server', 'Please try again later', [
+                    { text: 'OK', onPress: () => BackHandler.exitApp() },
+                ]);
             })
 
     }, [])
