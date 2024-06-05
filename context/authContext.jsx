@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { HttpStatusCode } from "axios";
 import * as SecureStore from 'expo-secure-store';
 import { createContext, useContext, useEffect, useState } from "react";
 import { Alert, ToastAndroid } from "react-native";
@@ -84,23 +84,31 @@ export const AuthContextProvider = ({ children }) => {
             },
             {
                 text: "No",
-                isPreferred : true,
+                isPreferred: true,
                 style: 'cancel'
             },
         ])
     }
 
     useEffect(() => {
+
         const existingUserString = SecureStore.getItem("currentUser")
-        if (existingUserString) {
-            existingUser = JSON.parse(existingUserString)
-            console.log("user exists: ", existingUser);
-            axios.defaults.headers.common['Authorization'] = `Bearer ${existingUser.api_key}`
-            setUser(existingUser)
+        if (!existingUserString) {
+            console.log("no existing user");
             return
         }
 
-        console.log("no existing user");
+        existingUser = JSON.parse(existingUserString)
+        console.log("user exists: ", existingUser);
+
+        axios.defaults.headers.common['Authorization'] = `Bearer ${existingUser.api_key}`
+        axios.get('/user-check', { timeout: 5000 })
+            .then(resp => {
+                if (resp.status === HttpStatusCode.Ok) {
+                    setUser(existingUser)
+                }
+            })
+            .catch()
 
     }, [])
 
