@@ -10,6 +10,7 @@ NewsWave is a mobile application that I've created, which enables users to subsc
 📡 Backend:
 - Go language (Golang)
 - Postgresql
+- project link: [github.com/nsltharaka/newsWaveAggregator](https://github.com/nsltharaka/newsWaveAggregator)
 
 ## What did I learn
 I found developing with React Native to be quicker, especially with the help of the Expo router for managing app navigation. Nativewind also made styling components much easier than using React Native stylesheets, although there were still some cases where I needed to use a React Native stylesheet.
@@ -21,4 +22,4 @@ Go (or Golang) is used to write the HTTP API and Aggregator engine. Go's concurr
 |:-------------------------:|:-------------------------:|:-------------------------:
 ![](readme/image.png) | ![](readme/image2.png) | ![](readme/image3.png) 
 ![](readme/image4.png) | ![](readme/image5.png) | ![](readme/image6.png)
-![](readme/image7.png)
+![](readme/image7.png) 
