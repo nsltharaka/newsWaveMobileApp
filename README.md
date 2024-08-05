@@ -17,9 +17,8 @@ I found developing with React Native to be quicker, especially with the help of 
 Go (or Golang) is used to write the HTTP API and Aggregator engine. Go's concurrency patterns make aggregating content from multiple feeds very efficient. The SQLC (a Golang binary) is used to easily handle database queries, and the GOOSE (also a Golang binary) is used to handle database migrations.
 
 ## App Interfaces
-|||
-|:-------------------------:|:-------------------------:
-![](readme/image.png) | ![](readme/image2.png)
-![](readme/image3.png) | ![](readme/image4.png)
-![](readme/image5.png) | ![](readme/image6.png)
-![](readme/image7.png) |
+||||
+|:-------------------------:|:-------------------------:|:-------------------------:
+![](readme/image.png) | ![](readme/image2.png) | ![](readme/image3.png) 
+![](readme/image4.png) | ![](readme/image5.png) | ![](readme/image6.png)
+![](readme/image7.png)
